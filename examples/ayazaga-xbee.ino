@@ -3,7 +3,7 @@
 #define RX_PIN 2
 #define TX_PIN 3
 #define BAUD_RATE 9600
-#define PAYLOAD_SIZE 14
+#define PAYLOAD_SIZE 13
 
 XBEE xbee(RX_PIN, TX_PIN, PAYLOAD_SIZE, BAUD_RATE);
 
@@ -15,12 +15,15 @@ void setup()
 
 void loop()
 {
+    // fake sensor data
     float lat = rand();
     float lon = rand();
 
-    String payload = String(lat, 6) + String(",") + String(lon, 6) + String(",");
+    // payload
+    String payload = String(lat, 6) + String(",") + String(lon, 6);
     xbee.message_to_coordinator(payload);
 
+    // to avoid flooding
     delay(1000);
 
     // xbee.broadcast(payload);
